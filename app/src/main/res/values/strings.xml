@@ -19,4 +19,15 @@
     <string name="permission_message">This app needs to record audio and recognize your speech.</string>
     <string name="listening">Listening…</string>
     <string name="load_file">Load file</string>
+    <string-array name="list_of_language">
+        <item>en-SG</item>
+        <item>en-US</item>
+        <item>en-GB</item>
+        <item>en-PH</item>
+        <item>en-NZ</item>
+        <item>en-IN</item>
+        <item>en-HK</item>
+        <item>en-AU</item>
+        <item>id-ID</item>
+    </string-array>
 </resources>

@@ -37,6 +37,14 @@
             android:paddingLeft="32dp"
             android:paddingRight="32dp"/>
 
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listItem"
+            android:padding="15dp">
+
+        </Spinner>
+
         <include layout="@layout/item_result"/>
 
     </android.support.design.widget.AppBarLayout>

@@ -37,7 +37,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.type.Color;
 
 import java.util.ArrayList;
 
@@ -53,32 +58,8 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
     private SpeechService mSpeechService;
 
     private VoiceRecorder mVoiceRecorder;
-    private final VoiceRecorder.Callback mVoiceCallback = new VoiceRecorder.Callback() {
 
-        @Override
-        public void onVoiceStart() {
-            showStatus(true);
-            if (mSpeechService != null) {
-                mSpeechService.startRecognizing(mVoiceRecorder.getSampleRate());
-            }
-        }
-
-        @Override
-        public void onVoice(byte[] data, int size) {
-            if (mSpeechService != null) {
-                mSpeechService.recognize(data, size);
-            }
-        }
-
-        @Override
-        public void onVoiceEnd() {
-            showStatus(false);
-            if (mSpeechService != null) {
-                mSpeechService.finishRecognizing();
-            }
-        }
-
-    };
+    String LangCode = "";
 
     // Resource caches
     private int mColorHearing;
@@ -126,6 +107,31 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
                 savedInstanceState.getStringArrayList(STATE_RESULTS);
         mAdapter = new ResultAdapter(results);
         mRecyclerView.setAdapter(mAdapter);
+
+        //spinner temp for accent
+        final Spinner spinner = (Spinner) findViewById(R.id.listItem);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.list_of_language, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                LangCode = (String) spinner.getSelectedItem();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                System.out.println("Please select accent");
+            }
+        });
+        //end of spinner
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -307,5 +313,33 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
         }
 
     }
+
+    private final VoiceRecorder.Callback mVoiceCallback = new VoiceRecorder.Callback() {
+
+        @Override
+        public void onVoiceStart() {
+            showStatus(true);
+            if (mSpeechService != null) {
+                System.out.println("checkStringBahasa "+LangCode);
+                mSpeechService.startRecognizing(mVoiceRecorder.getSampleRate(), LangCode);
+            }
+        }
+
+        @Override
+        public void onVoice(byte[] data, int size) {
+            if (mSpeechService != null) {
+                mSpeechService.recognize(data, size);
+            }
+        }
+
+        @Override
+        public void onVoiceEnd() {
+            showStatus(false);
+            if (mSpeechService != null) {
+                mSpeechService.finishRecognizing();
+            }
+        }
+
+    };
 
 }
