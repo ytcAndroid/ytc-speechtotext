@@ -29,5 +29,9 @@
         <item>en-HK</item>
         <item>en-AU</item>
         <item>id-ID</item>
+        <item>it-IT</item>
     </string-array>
+    <style name="spinnerTheme">
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

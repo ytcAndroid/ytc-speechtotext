@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements MessageDialogFrag
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 LangCode = (String) spinner.getSelectedItem();
+                System.out.println("checkBahasa "+LangCode);
             }
 
             @Override
